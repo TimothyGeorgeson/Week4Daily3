@@ -12,7 +12,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -29,7 +28,7 @@ public class UserAuthenticator extends AppCompatActivity {
     CompleteListener completeListener;
 
     GoogleSignInClient googleSignInClient;
-    private final static int RC_SIGN_IN = 101;
+    public final static int RC_SIGN_IN = 101;
 
     public UserAuthenticator(Activity activity, CompleteListener completeListener) {
         auth = FirebaseAuth.getInstance();
@@ -69,27 +68,7 @@ public class UserAuthenticator extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
-            } catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
-                Toast.makeText(this, "Sign in failed", Toast.LENGTH_SHORT).show();
-                Log.w(TAG, "Google sign in failed", e);
-                // ...
-            }
-        }
-    }
-
-    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
+    public void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);

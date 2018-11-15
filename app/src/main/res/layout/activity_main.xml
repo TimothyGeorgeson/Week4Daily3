@@ -41,4 +41,18 @@
         android:layout_gravity="center"
         android:layout_margin="10sp" />
 
+    <!--<com.facebook.login.widget.LoginButton-->
+        <!--android:id="@+id/btnFB"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_margin="10sp"-->
+        <!--android:layout_width="200sp"-->
+        <!--android:layout_height="wrap_content" />-->
+
+    <Button
+        android:onClick="onSignOut"
+        android:text="Sign Out"
+        android:layout_gravity="center"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>
