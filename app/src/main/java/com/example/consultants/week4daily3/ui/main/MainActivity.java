@@ -52,28 +52,28 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         });
 
         //facebook sign in
-//        mCallbackManager = CallbackManager.Factory.create();
-//        LoginButton loginButton = findViewById(R.id.btnFB);
-//        loginButton.setReadPermissions("email", "public_profile");
-//        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-//            @Override
-//            public void onSuccess(LoginResult loginResult) {
-//                Log.d(TAG, "facebook:onSuccess:" + loginResult);
-////                handleFacebookAccessToken(loginResult.getAccessToken());
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//                Log.d(TAG, "facebook:onCancel");
-//                // ...
-//            }
-//
-//            @Override
-//            public void onError(FacebookException error) {
-//                Log.d(TAG, "facebook:onError", error);
-//                // ...
-//            }
-//        });
+        mCallbackManager = CallbackManager.Factory.create();
+        LoginButton loginButton = findViewById(R.id.btnFB);
+        loginButton.setReadPermissions("email", "public_profile");
+        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                userAuthenticator.handleFacebookAccessToken(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d(TAG, "facebook:onCancel");
+                // ...
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d(TAG, "facebook:onError", error);
+                // ...
+            }
+        });
 
     }
 
@@ -136,6 +136,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 Log.w(TAG, "Google sign in failed", e);
                 // ...
             }
+        }
+        else
+        {
+            // Pass the activity result back to the Facebook SDK
+            mCallbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
 }
